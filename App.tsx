@@ -1,20 +1,25 @@
+import React, { useContext } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { AppContextProvider, AppContext } from './context/AppContext';
+import TabNavigator from './navigation/TabNavigator';
+import AuthNavigator from './navigation/AuthNavigator';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+const RootNavigator = () => {
+  const { user } = useContext(AppContext);
+  return user ? <TabNavigator /> : <AuthNavigator />;
+};
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AppContextProvider>
+      <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight, paddingBottom: 6 }}>
+      <NavigationContainer>
+        <StatusBar style="light" backgroundColor="green" />
+        <RootNavigator />
+      </NavigationContainer>
+      </SafeAreaView>
+    </AppContextProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
