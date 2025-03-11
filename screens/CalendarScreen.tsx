@@ -45,7 +45,7 @@ const CalendarScreen = ({ navigation }: any) => {
   // Determine the label for the selected date.
   let eventTypeLabel = '';
   if (selectedDate === todayStr) {
-    eventTypeLabel = 'Ongoing Events';
+    eventTypeLabel = 'Events for Today';
   } else if (selectedDate > todayStr) {
     eventTypeLabel = 'Upcoming Events';
   } else {
@@ -77,7 +77,15 @@ const CalendarScreen = ({ navigation }: any) => {
           >
             <Text style={styles.eventText}>{item.heading}</Text>
             <Text style={styles.eventDate}>
-              {new Date(item.eventDate!).toLocaleDateString()}
+              {new Date(item.eventDate!).toLocaleString(undefined, {
+                weekday: 'short',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true, // Change to false for 24-hour format
+              })}
             </Text>
           </TouchableOpacity>
         )}
